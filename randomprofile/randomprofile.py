@@ -1,4 +1,5 @@
 #!/usr/bin/python
+import random
 
 def randomBirthday():
 	month=random.randint(1,12)
@@ -13,4 +14,20 @@ def randomBirthday():
 	return day,month,year
 
 print randomBirthday()
+
+f=open("indianfirstnames-male.txt",r")
+firstnamesmale=f.read().split('\n')
+f.close()
+
+f=open("indianlastnames.txt","r")
+lastnames=f.read().split('\n')
+f.close()
+
+FirtName = firstnamesmale[random.randint(0,len(firstnamesmale)-1)]
+LastName = lastnames[random.randint(0,len(lastnames)-1]
+
+print Firstname,LastName
+
+
+
 
