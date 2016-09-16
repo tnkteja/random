@@ -147,17 +147,78 @@ class GuidedMedia(Media):
 	def __init__(self):
 		pass
 
-class Satellite(object):
-
+class System(object):
+	
 	def __init__(self):
 		pass
+	
+class Satellite(System):
+	def __init__(self,height,rotationtime, latecy, coverage,):
+		self.height=height
+		self.timeperiod=rotationtime
+		self.latency= latency
+		self.coverage=coverage
 
 class GeostationarySatellelite(Satellite):
+	def __init__(self):
+		super(Satellite,self).__init__(35000,days(24),millseconds(270),None)
 
+class MeostationarySatellite(Satellite):
+	"""
+	Upper Vanhelen belt and Upper Vanhelen belt.  GPS.
+	"""
+	def __init__(self):
+		super(Satellite,self).__init__(10000,None,[milliseconds(35),milliseconds(85)],millseconds(270)],None)
+	
+class LeostationarySatellite(Satellite):
+	"""
+	Lower Vanhelen belt and Upper Vanhelen belt.
+	"""
+	def __init__(self):
+		super(Satellite,self).__init__(None,None,None,None)
+		
+class Iridium(LeostationarySatellite):
+	def __init__(self):
+		pass
+	
+class Hub(object):
 	def __init__(self):
 		pass
 
+class ADSL(object):
+	def __init__(self):
+		pass
+	
+class PublicTelephoneNetworks(System):
+	"""3 khz
+	"""
+	def __init__(self):
+		pass
+class FiberToTheHome(object):
+	"""
+	"""
+	def __init__(self):
+		pass
+class Modem(object):
+	def __init__(self):
+		pass
 
+class Lastmile(object):
+	def __init__(self):
+		pass
+
+class Localloop(Lastmile):
+	def __init__(self):
+		pass
+
+class ADSL(Localloop):
+	def __init__(self):
+		pass
+
+class FibreToTheHome(Localloop):
+	def __init__(self):
+		pass
+	
 import numpy as np
 import matplotlib.plotly as plt
 
