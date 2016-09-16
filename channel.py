@@ -68,7 +68,7 @@ class ManchesterEncoding(Encoding):
 	def __init__(self):
 		pass
 
-class FourBFiveBEncoding(Encoding):
+class 4B5BEncoding(Encoding):
 	def __init__(self):
 		pass
 
@@ -84,28 +84,8 @@ class EightBTenBEncoding(Encoding):
 
 class Multiplexing(Pretty):
 
-	def __init__(self):
-		pass
-
-class BasebandModulation(Pretty):
-
-	def __init__(self):
-		pass
-
-class PulseCodeModulation(BasebandModulation):
-
-	def __init__(self):
-		pass
-
-class PulsePositionModulation(BasebandModulation):
-
-	def __init__(self):
-		pass
-
-class PulseDurationmodulation(BasebandModulation):
-
-	def __init__(self):
-		pass
+	def __init__(self, channels):
+		self.channels = channels
 
 class PassBandModulation(Pretty):
 
@@ -127,40 +107,20 @@ class PhaseShiftKeying(PassBandModulation):
 	def __init__(self):
 		pass
 
-class QuadratureAmplitudeModulation(PassBandModulation):
-
-	def __init__(self):
-		pass
-
-class QuadratureAmplitudeModulation16(PassBandModulation):
-
-	def __init__(self):
-		pass
-
-class QuadratureAmplitudeModulation64(PassBandModulation):
-
-	def __init__(self):
-		pass
-
-class BinaryPhaseShiftKeying(PassBandModulation):
-
-	def __init__(self):
-		pass
-
-class QuadruplePhaseShiftKeying(PassBandModulation):
-
-	def __init__(self):
-		pass
-		
 class TimeDivisionMultiplexing(Multiplexing):
 
-	def __init__(self):
-		pass
+	def __init__(self,slot, channels, guard):
+		super(Multiplexing,self).__init__(channels)
+		self.slot = slot
+		self.guard = guard
+
 
 class FrequencyDivisionMultiplexing(Multiplexing):
 
-	def __init__(self):
-		self.guardband=0
+	def __init__(self,guard, channels):
+		super(Multiplexing,self).__init__(channels)
+		self.guardband=guard
+		self.channels = channels
 
 class CodeDivisionMultiplexing(Multiplexing):
 
@@ -171,6 +131,32 @@ class OrthogonalFrequencyDivisionMultiplexing(FrequencyDivisionMultiplexing):
 
 	def __init__(self):
 		pass
+
+class Media(object):
+	"""docstring for Media"""
+	def __init__(self, noise, interference, attenuation):
+		pass
+
+class UnguidedMedia(Media):
+
+	def __init__(self):
+		pass
+
+class GuidedMedia(Media):
+
+	def __init__(self):
+		pass
+
+class Satellite(object):
+
+	def __init__(self):
+		pass
+
+class GeostationarySatellelite(Satellite):
+
+	def __init__(self):
+		pass
+
 
 import numpy as np
 import matplotlib.plotly as plt
