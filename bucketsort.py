@@ -1,3 +1,7 @@
+#!/usr/bin/python
+#
+"""bucketSort
+"""
 from __future__ import division
 import random, math
 
@@ -10,6 +14,15 @@ class Node(object):
 		self.next=next
 		self.data=data
 
+	def swap_with_next(self):
+		next=self.next
+		if not next:
+			return
+		next.previous,self.previous=self.previous,next
+		self.next,next.next=next.next,self
+
+	def swap_with_previous(self):
+		pass
 
 def forward_iterator(head):
 	while head:
@@ -39,6 +52,12 @@ for i in xrange(N-1):
 	tmp=tmp.next
 
 
+def insertionSort(head,key=None):
+	i=head.next
+	while i:
+		if key(i) <= key(i.previous):
+			i.swap_with_previous()
+
 print_linkedlist(head)
 
 def bucketSort(head,l,u,N):
@@ -67,3 +86,23 @@ def bucketSort(head,l,u,N):
 	return head
 
 print print_linkedlist(bucketSort(head, l, u, N))
+
+"""
+MIT License
+Copyright (c) 2016 Neela Krishna Teja Tadikonda
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+"""
