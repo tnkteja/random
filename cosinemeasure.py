@@ -11,4 +11,4 @@ class Vector(list):
     def __mul__(self,other):
          return Vector([ v*other[i] for i,v in enumerate(other)])
          
-cosinemeasure = lambda x,y:  (x*y)/(abs(x)*abs(y))
+cosinemeasure = lambda x,y:  abs(x*y)/(abs(x)*abs(y))
