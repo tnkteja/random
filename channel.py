@@ -218,7 +218,124 @@ class ADSL(Localloop):
 class FibreToTheHome(Localloop):
 	def __init__(self):
 		pass
+
+class Trunk(Multiplexing,Localloop):
+	def __init__(self):
+		pass
+class T1Carriers(Trunk):
+	def __init__(self,channels=24,channelrate=kbps(64),overhead=None):
+		pass
+class T2Carriers(Trunk):
+	def __init__(self, channels=4,channelrate=mbps(6.3),overhed=None):
+		pass
+class T3Carriers(Trunk):
+	def __init__(self, channels=7, channelrate=mbps(44.7),overhead=None):
+		pass
+
+class Sonet(Trunk):
+	def __init__(self, channels=):
+		pass
+class OC1(Sonet):
+	def __init__(self,totalbitrate):
+		pass
+class OC2(Sonet):
+	def __init__(self,totalbitrate):
+		pass
 	
+class MobilePhoneSystem(object):
+	def __init__(self):
+		pass
+class OneG(MobilePhoneSystem):
+	def __init__(self):
+		pass
+class RadioAccessNetwork(object):
+	def __init__(self):
+		pass
+class AMPS(RadioAccessNetwork):
+	def __init__(self):
+		pass
+
+class LogicalChannel(object):
+	def __init__(self):
+		pass
+class ControlChannel(LogicalChannel):
+	def __init__(self):
+		pass
+class AccessChannel(LogicalChannel):
+	def __init__(self):
+		pass
+		
+class TwoG(MobilePhoneSystem):
+	"""
+	Digitization, Encryption
+	"""
+	def __init__(self):
+		pass
+class GSM(TwoG):
+	"""
+	124 FDM full-duplex channels
+	200khz
+	TDM - 992 channels
+	"""
+	def __init__(self):
+		
+class SubscriberIdentityModule(object):
+	def __init__(self):
+		pass
+	
+class ThreeG(MobilePhoneSystem):
+	def __init__(self):
+		pass
+class UMTS(ThreeG):
+	def __init__(self):
+		pass
+	
+class FourG(MobilePhoneSystem):
+	def __init__(self):
+		pass
+class LTE(FourG):
+	def __init__(self):
+		pass
+clas  CableTelevision(object):
+	"""
+	differentiate TV and data: spectrum allocation
+	shared  - contention resolution
+	upstream amplificatino
+	"""
+	def __init__(self):
+		pass
+class Cell(object):
+	"""
+	10-20 km
+	"""
+	def __init__(polygon=6):
+		pass
+
+class Clusters(Cell):
+	def __init__(cells=None):
+		pass
+	
+class BSC(object):
+	"""
+	N- mobiles will be hooked on to this BSC.
+	"""
+	def __init__():
+		pass
+
+class MSC(object):
+	def __init__():
+		pass
+
+
+class DeviceDrivers(object):
+	"""
+	Part of operationg system, but L1, L2 device hardware driver software.
+	"""
+	def ___init__(self):
+		pass
+
+
+
 import numpy as np
 import matplotlib.plotly as plt
 
