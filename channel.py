@@ -156,7 +156,7 @@ class Satellite(System):
 	def __init__(self,height,rotationtime, latecy, coverage,):
 		self.height=height
 		self.timeperiod=rotationtime
-		self.latency= latency
+		self.latency= latency or height/(3*10**8)
 		self.coverage=coverage
 
 class GeostationarySatellelite(Satellite):
@@ -169,7 +169,12 @@ class MeostationarySatellite(Satellite):
 	"""
 	def __init__(self):
 		super(Satellite,self).__init__(10000,None,[milliseconds(35),milliseconds(85)],millseconds(270)],None)
-	
+
+class SatelliteConstellation(object):
+	def __init__(self,rings=None,satellites=None):
+		self.rings=rings
+		self.satellites=satellites
+		
 class LeostationarySatellite(Satellite):
 	"""
 	Lower Vanhelen belt and Upper Vanhelen belt.
@@ -177,9 +182,9 @@ class LeostationarySatellite(Satellite):
 	def __init__(self):
 		super(Satellite,self).__init__(None,None,None,None)
 		
-class Iridium(LeostationarySatellite):
+class Iridium(SatelliteConstellation):
 	def __init__(self):
-		pass
+		super(SatelliteConsellation,self).__init__(rings=6, satellites=66)
 	
 class Hub(object):
 	def __init__(self):
