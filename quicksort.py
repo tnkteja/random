@@ -91,10 +91,8 @@ def hoare_partition(a,l,r):
 	li=l
 	ri=r-1
 	while li<=ri:
-		while a[li]<pivot and li <= ri:
-			li+=1
-		while a[ri]>=pivot and ri >= li:
-			ri-=1
+		while a[li]<pivot and li <= ri:    li+=1
+		while a[ri]>=pivot and ri >= li:    ri-=1
 		if li<=ri:
 			a[li],a[ri]=a[ri],a[li]
 			li+=1
