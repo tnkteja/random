@@ -52,23 +52,22 @@ def quicksort(a,l,r, depth=100):
 
 def quicksort_tail_recursive_optimzed(a,l,r):
 	stack=[(l,r)]
+	random.shuffle(a)
 	while stack:
 		l,r=stack.pop()
 		lena=r-l+1
 
 		#Base case 1
-		if lena <2:
-			return
+		if lena <2:    continue
 		elif lena == 2:
 			if a[l] > a[r]:
 				a[l],a[r]=a[r],a[l]
-			return
+			continue
 		
 		pivot = a[r]
 		i = r
 
 		li,ri,pivot=hoare_partition(a, l, r)
-		print li,ri,pivot,a
 		#sort left partition
 		if li > 0:
 			stack.append((l,li-1))
@@ -91,8 +90,10 @@ def hoare_partition(a,l,r):
 	li=l
 	ri=r-1
 	while li<=ri:
-		while a[li]<pivot and li <= ri:    li+=1
-		while a[ri]>=pivot and ri >= li:    ri-=1
+		while a[li]<pivot and li <= ri:
+			li+=1
+		while a[ri]>=pivot and ri >= li:
+			ri-=1
 		if li<=ri:
 			a[li],a[ri]=a[ri],a[li]
 			li+=1
@@ -110,7 +111,7 @@ a=range(0,11)
 seed=random.random()
 print "seed # :",seed
 random.seed(seed)
-#random.shuffle(a)
+random.shuffle(a)
 print a
 print quicksort_tail_recursive_optimzed(a,0,len(a)-1)
 print a
