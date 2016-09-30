@@ -27,17 +27,6 @@ def quicksort(a,l,r, depth=100):
 	i = r
 
 	# print i,pivot,a
-
-	#Partition case
-	# pivot=a[r]
-	# li=l
-	# ri=r-1
-	# while li<ri-1:
-	# 	while a[li]<pivot:
-	# 		li+=1
-	# 	while a[ri]> pivot:
-	# 		ri-=1
-	# 	a[li],a[ri]=a[ri],a[li]
 	li,ri,pivot=hoare_partition(a, l, r)
 	print li,ri,pivot,a
 	#sort left partition
@@ -68,13 +57,8 @@ def quicksort_tail_recursive_optimzed(a,l,r):
 		i = r
 
 		li,ri,pivot=hoare_partition(a, l, r)
-		#sort left partition
-		if li > 0:
-			stack.append((l,li-1))
+		stack+=[(l,li-1),(li+1,r)] if  li-l  > r-li else  [(li+1,r),(1,li-1)]
 
-		#sort right partition
-		if li < r:
-			stack.append((li+1,r))
 
 def lomuto_partition(a,l,r):
     i=l
