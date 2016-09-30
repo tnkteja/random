@@ -5,7 +5,7 @@ class Optimizer(object):
 	def __init__(self):
 		self.name = self.__class__.__name__
 
-
+# from dsl import Optimizer
 class MaxWalkSat(Optimizer):
 	"""
 	"""
