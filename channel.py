@@ -339,6 +339,9 @@ class DeviceDrivers(object):
 	def ___init__(self):
 		pass
 
+class Header(object):
+	def __init__():
+		pass
 
 
 import numpy as np
