@@ -52,10 +52,7 @@ def quicksort_tail_recursive_optimzed(a,l,r):
 			if a[l] > a[r]:
 				a[l],a[r]=a[r],a[l]
 			continue
-		
-		pivot = a[r]
-		i = r
-
+			
 		li,ri,pivot=hoare_partition(a, l, r)
 		stack+=[(l,li-1),(li+1,r)] if  li-l  > r-li else  [(li+1,r),(1,li-1)]
 
