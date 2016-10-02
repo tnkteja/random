@@ -295,6 +295,12 @@ class UMTS(ThreeG):
 	def __init__(self):
 		pass
 	
+class ErrorCorrection(object):
+	pass
+
+class ErrorDetection(object):
+	pass
+	
 class FourG(MobilePhoneSystem):
 	def __init__(self):
 		pass
@@ -315,7 +321,6 @@ class Cell(object):
 	"""
 	def __init__(polygon=6):
 		pass
-
 class Clusters(Cell):
 	def __init__(cells=None):
 		pass
