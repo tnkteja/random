@@ -1,4 +1,6 @@
 class stopandwait(object):
+    """Don't overflow the receviver , do the ack , with the flow control
+    """
     def __init__():
        self.count=0
     
