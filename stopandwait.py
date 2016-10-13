@@ -1,5 +1,5 @@
 class stopandwait(object):
-    """Don't overflow the receviver , do the ack , with the flow control
+    """Don't overflow the receviver , do the ack , with the flow control. noiseless channel.
     """
     def __init__():
        self.count=0
