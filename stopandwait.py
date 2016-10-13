@@ -30,9 +30,10 @@ class stopandwaitNoisy(object):
     def __init__():
         self.pendingSequence=[None]*2
         self.startSequence = 0 if random.random() < 0.5 else 1
+        self.expectedSequence=None
     
     def send(self):
-        packet=self.buffer.pop()
+        packet=self.sendBuffer.pop()
         def sendPacket():
             self.socket.send(packet)
         self.timer=threading.Timer(0.5,sendPacket)
@@ -43,7 +44,8 @@ class stopandwaitNoisy(object):
             _,timer=self.pendingSequence=[packet.sequence]
             self.timer.cancel()
             self.send()
-        if packet
+        if packet.sequence is self.expectedSequence:
+            self.receiveBuffer.append(packet)
         #elif packet.type == Packet.NACK:
         #    packet,timer=self.pendingSequence=[packet.sequence]
         #    timer.cancel()
