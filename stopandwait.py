@@ -23,11 +23,13 @@ class stopandwait(object):
         self.socket.send(PacketAck().serialize())
         
         
-import threading
+import threading,random
+
 class stopandwaitNoisy(object):
     
     def __init__():
-        pass
+        self.pendingSequence=[None]*2
+        self.startSequence = 0 if random.random() < 0.5 else 1
     
     def send(self):
         packet=self.buffer.pop()
@@ -37,12 +39,17 @@ class stopandwaitNoisy(object):
         
     def receive(self):
         if packet.type = Packet.ACK:
-            self.lastAck=True
             self.receiveCount+=1
+            _,timer=self.pendingSequence=[packet.sequence]
             self.timer.cancel()
             self.send()
-        else:
-            self.buffer.append(packet)
+        if packet
+        #elif packet.type == Packet.NACK:
+        #    packet,timer=self.pendingSequence=[packet.sequence]
+        #    timer.cancel()
+        #    self.socket.send(packet)
+        #    timer.start()
+            
             
     def sendAck(self):
         self.socket.send(PacketAck().serialize())
