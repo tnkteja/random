@@ -55,3 +55,24 @@ class stopandwaitNoisy(object):
             
     def sendAck(self):
         self.socket.send(PacketAck().serialize())
+        
+        
+        
+        
+        
+ class channel(object):
+    
+    def __init__(self):
+        """
+        Number of bits in transit on the chanel.
+        """
+        self.bandwidthDelayProduct= self.bandwidth * self.propagationDelay
+        
+        self.utilization = self.s/2*self.bandwidthDelayProduct
+        
+        
+class SlidingWindow(object):
+    
+    def __init__(self):
+        self.senderWindow=[0,10]
+        self.receiverWindow=[0,10]
