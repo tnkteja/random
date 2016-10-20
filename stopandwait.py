@@ -26,6 +26,12 @@ class stopandwait(object):
 import threading,random
 
 class stopandwaitNoisy(object):
+    """Flow control, Error control, a.k.a ARQ or PAR.
+    We are putting a packet every roundtrip time. but to be accurate, it is 2 *delay +  transmission time to put my packet number, 
+    atleast until sequence number. and the procesing delay at the receiver to recevice atleast until the sequence number and prepare 
+    an acknowledgement.+ transmission time to put the ack on the link atleast until the sequence number and the processing delay on
+    sender side to recognise and clear this packet as sent.
+    """
     
     def __init__():
         self.pendingSequence=[None]*2
@@ -39,18 +45,23 @@ class stopandwaitNoisy(object):
         self.timer=threading.Timer(0.5,sendPacket)
         
     def receive(self):
-        if packet.type = Packet.ACK:
+        if not packet.integrity():
+            self.socket.send(packet.nak())
+        elif packet.type = Packet.ACK:
             self.receiveCount+=1
             _,timer=self.pendingSequence=[packet.sequence]
             self.timer.cancel()
             self.send()
+        elif packet.type == Packet.NACK:
+            packet,timer=self.pendingSequence=[packet.sequence]
+            timer.cancel()
+            self.socket.send(packet)
+            timer.start()
         if packet.sequence is self.expectedSequence:
             self.receiveBuffer.append(packet)
+        self.socket.send(packet.ack())
         #elif packet.type == Packet.NACK:
-        #    packet,timer=self.pendingSequence=[packet.sequence]
-        #    timer.cancel()
-        #    self.socket.send(packet)
-        #    timer.start()
+
             
             
     def sendAck(self):
