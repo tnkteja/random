@@ -9,6 +9,11 @@ import heapq
 
 
 
+from collections import defaultdict, deque, OrderedDict
+from itertools import groupby
+import heapq
+
+
 class graph(object):
     """Space Complexity is v + 2 * e
     Some graph types : star graphs and fully connected graphs.
@@ -28,12 +33,13 @@ class graph(object):
     Initialising the graph is n time constant time complexity.
     """
 
-    def __init__(self,vertices=[]):
+    def __init__(self,vertices=[],directed=False):
+        self.directed=directed
         self.root=vertices[0]
         """
         Adding entries to dict is O(1) operation, so for n entries it is n time constant time.
         """
-        self.vertices={}
+        self.vertices=OrderedDict()
         for vertex in vertices:
             self.vertices[vertex]={}
 
@@ -138,51 +144,40 @@ class graph(object):
                         s.append((newpath, newpathcost))
         return None
 
-        def dfst(self, start=None):
-            seen={}
-            for node in self.vertices:
-                seen[node]=False 
-            s=[] #stack
-            goal=self.vertices[vertex].data
-            #Initialize a stack of paths with the one-node path consisting of the initial state
-            s=[[start or self.vertices[0].data]]
-            #While (stack not empty)
-            while s:
-                path=s.pop() #Pop top path
-                seen[path[-1]]=True
-                if path[-1] is goal:
-                    return path
-                #If last node on path matches goal, return path
-                #Else extend the path by one node in all possible ways, 
-                # by generating successors of the last node on the path
-                else:
-                #Push successor paths on top of stack Return FAIL
-                    for adj in self.vertices[path[-1]].al:
-                        if not seen[adj]:
-                            newpath=path[::]
-                            s.append(newpath.append(adj.data))
-            return None
-
-    def astar(self, returnPath=False,heuristic=None):
-        self.seen={}
+    def dfst(self, start=None, order=[], reverse=False):
+        discover={}
+        done={}
         for node in self.vertices:
-            self.seen[node]=False
-        pq=[] #heapq
-        pq=[start or self.vertices[0]]
+            discover[node]=done[node]=False 
+        s=[] #stack
+        #Initialize a stack of paths with the one-node path consisting of the initial state
+        ssg=[]
         #While (stack not empty)
-        while s:
-            node= s.pop() #Pop top path
-            seen[node]=True
-            if node is goal:
-                return True
-            #If last node on path matches goal, return path
-            #Else extend the path by one node in all possible ways, 
-            # by generating successors of the last node on the path
-            else:
-                for adj in node.al:
-                    if not seen[adj]:
-                        s.append(adj)
-        return False;
+        order = deque(order) or deque(self.vertices.keys()) # dic.keys() returns a new object
+        start= start or order.popleft()
+        while True:
+            sg=deque()
+            attach = getattr(sg, "append" if reverse else "appendleft")
+            s=[[start,[]]]
+            discover[s[0][0]]=True
+            while s:
+                V=v,_,=s[-1]
+                for adj,_ in self.vertices[v].items():
+                    if not discover[adj]:
+                        V[1].append(adj) # populate dfs undiscovered children
+                        dv=[adj, []] # baptise a new child
+                        s.append(dv)  # push on stack 
+                        discover[adj]=True # mark it gray
+                if len(V[1])==0 or all(map(lambda x:  done[x], V[1])):
+                    d=s.pop()
+                    done[d[0]]=True
+                    attach(d[0])
+            ssg.append(sg)
+            order=filter(lambda x:  not done[x], order)
+            if not order:
+                break
+            start=order.pop()
+        return ssg
 
     def ucsp(self,vertex,start=None):
         """Uniform Cost Search can also be considered as greedy search.
@@ -292,15 +287,112 @@ class graph(object):
                 s+=sorted(succesors,key= lambda x: heuristic(x[0][-1],vertex), reverse=True)
         return None      
 
-    def cycles(self,returnPath=False):
+    def astar(self,vertex , start=None,heuristic=lambda x,y:  y-x):
+        """A - star 
+        Comments: Based on the heuristic and sofar achieved distance on a priority queue.
         """
-        differentiate for directed and undirected graphs
-        """
+        seen={}
+        for v in self.vertices:
+            seen[v]=False
+        pq=[] #heapq
+        #Initialize a priority queue of paths with the one-node path consisting of the initial state
+        pq=[(0,([start or self.root],0))]
+        #While (queue not empty)
+        while pq:
+            _,(path, pathcost)=heapq.heappop(pq)
+            seen[path[-1]]=True
+            if path[-1] is vertex:
+                return path,pathcost
+            else:
+                for adj,costfunction in self.vertices[path[-1]].items():
+                    if not seen[adj]:
+                        newpath=path[::]
+                        newpath.append(adj)
+                        newpathcost =  pathcost + costfunction(path[-1], v )
+                        heapq.heappush(pq, (newpathcost + heuristic(path[-1], vertex),(newpath, newpathcost)))
+        return None
+
+    def idastar(self,vertex,start=None, heuristic=lambda x,y:  y-x):
         pass
 
-    def topologicalSort(self):
+    def cycles(self):
+        """
+        differentiate for directed and undirected graphs
+        backedges in the dfs.
+        """
+        discover={}
+        done={}
+        for node in self.vertices:
+            done[node]=discover[node]=False 
+        s=[]
+        cycles=set()
+        for start in self.vertices:
+            if discover[start]:
+                continue
+            s=[start]
+            discover[start]=True
+            while s:
+                v=s[-1]
+                adjcount=0
+                for adj,_ in self.vertices[v].items():
+                    if discover[adj] and not done[adj] and ( not self.directed and adj != s[-2] ):
+                        # found a backward edge
+                        begin=s.index(adj)
+                        end=s.index(v)
+                        cycles.add(tuple(s[begin:end+1]))
+                    elif not discover[adj]:
+                        adjcount+=1
+                        s.append(adj)
+                        discover[adj]=True
+                if adjcount ==0:
+                    done[s.pop()]=True
+        return cycles
+
+    def ts(self, start=None, order=[], reverse=False):
+        """dfs topological sort
+        """
+        discover={}
+        done={}
+        for node in self.vertices:
+            discover[node]=done[node]=False 
+        s=[] #stack
+        #Initialize a stack of paths with the one-node path consisting of the initial state
+        ssg=[]
+        #While (stack not empty)
+        order = deque(order) or deque(self.vertices.keys()) # dic.keys() returns a new object
+        start= start or order.popleft()
+        while True:
+            sg=deque()
+            attach = getattr(sg, "append" if reverse else "appendleft")
+            s=[[start,[]]]
+            discover[s[0][0]]=True
+            while s:
+                V=v,_,=s[-1]
+                for adj,_ in self.vertices[v].items():
+                    if not discover[adj]:
+                        V[1].append(adj) # populate dfs undiscovered children
+                        dv=[adj, []] # baptise a new child
+                        s.append(dv)  # push on stack 
+                        discover[adj]=True # mark it gray
+                if len(V[1])==0 or all(map(lambda x:  done[x], V[1])):
+                    d=s.pop()
+                    done[d[0]]=True
+                    attach(d[0])
+            ssg.append(sg)
+            order=filter(lambda x:  not done[x], order)
+            if not order:
+                break
+            start=order.pop()
+        return ssg
+
+    def scc(self):
+        """
+        Part of the graph from any vertex can reach any vertex in the 
+        graph. If you see it all vertices on a cycle belong to the strongly
+        connected components.
+        trivial strongly connected components are node conneccted to itself.
+        """
         pass
-        # do a DFS
 
 import random
 
@@ -320,8 +412,15 @@ g.addAdjacency(4, [(1,lambda x,y:  1),(2,lambda x,y:  1),(5,lambda x,y:  1)])
 g.addAdjacency(5, [(2,lambda x,y:  1),(4,lambda x,y:  1),(6,lambda x,y:  1)])
 g.addAdjacency(6, [(5,lambda x,y:  1)])
 
-print g.bfsp(6)
-print g.dfsp(6) # depth first search
-print g.ucsp(6) # uniform cost search
-print g.gbfsp(6) # greedy best first search 
-print g.gbfhcsp(6) # greedy best hill climbing search
+print g
+# print g.bfsp(6)  # breadth first search
+# print g.dfsp(6) # depth first search
+# print g.ucsp(6) # uniform cost search
+# # print g.dfid(6)
+# print g.gbfsp(6) # greedy best first search 
+# print g.gbfhcsp(6) # greedy best hill climbing search
+# print g.astar(6)
+# print g.idastar(6)
+
+#print g.ts()
+print g.cycles()
