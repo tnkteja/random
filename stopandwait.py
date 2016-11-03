@@ -31,6 +31,7 @@ class stopandwaitNoisy(object):
     atleast until sequence number. and the procesing delay at the receiver to recevice atleast until the sequence number and prepare 
     an acknowledgement.+ transmission time to put the ack on the link atleast until the sequence number and the processing delay on
     sender side to recognise and clear this packet as sent.
+    Flow control is wait until the receiver can receiver can get the packet and process it very quickly
     """
     
     def __init__():
@@ -69,7 +70,8 @@ class stopandwaitNoisy(object):
         
         
         
-        
+"""
+"""
         
  class channel(object):
     
