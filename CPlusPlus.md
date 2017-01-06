@@ -11,7 +11,7 @@ Some feature are *** std::variant *** , *** if and swith statements with initial
 #include<iostream>
 using namespace std;
 
-auto function(){  \\ return type deduction
+auto function(){  // return type deduction
     if (auto a=1;a == 1){
        return 's';
     }
