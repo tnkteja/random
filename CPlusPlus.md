@@ -2,8 +2,10 @@
 ## Related Work
 
 [1] says that C++14release is already out and some or ost of the features are in the compilers clang  g++ and visual studio. So of the prominent features 
-features are ***Return Type Deduction***, *** Generic Lambdas ***, ***Initialized Lambda Captures***
+features are ***Return Type Deduction***, *** Generic Lambdas ***, ***Initialized Lambda Captures***.
 
+[2] talks about latest changes in the c++17 specification changes and addition of new features introduced by the specification
+Some feature are *** std::variant *** , *** if and swith statements with initialiser ***, *** if constexpr ***,  ***auto in templates ***, *** structured bindings ***,  
 ```c++
 #include<stdio.h>
 #include<iostream>
@@ -20,12 +22,6 @@ auto function(){  \\ return type deduction
     variant<int, char> v;
     return 'a';
 }
-```
-
-[2] talks about latest changes in the c++17 specification changes and addition of new features introduced by the specification
-Some feature are *** std::variant *** , *** if and swith statements with initialiser ***, *** if constexpr ***,  ***auto in templates ***, *** structured bindings ***,  
-```c++
-variant 
 ```
 ## References
 
