@@ -96,6 +96,8 @@ class GrandDerivedClass{
 
 int main(unsigned int argc, char** argv){
     
+    decltype("1234") cA4 = "abcd";
+    
     int r=function(0,0,'\0'); \\ Early binding
     int (fptr*)(const int, char* const, const char *) = function;
     fptr(0,0,'\0');  \\ late bnding
@@ -113,6 +115,9 @@ int main(unsigned int argc, char** argv){
     int * dA2 = new int[10]{0,6,6};   
     
     // Deallocate or delete
+    
+    
+    static_aasert(1==0,"some error desc"); // compile time assertion.
     
     BaseClass base();
     DerivedClass derived(5);
