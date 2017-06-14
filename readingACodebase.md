@@ -5,7 +5,7 @@ Look for the components in the picture and follow any components for that pictur
 ## Feel the code in action
 ### Find how this code is test
 ### Find how this code deployed
-### Find how this code is 
+### Find how this code is otherwise devopsed
 
 ## References
 1. _https://www.reddit.com/r/learnprogramming/comments/3ebgy3/how_do_i_start_understanding_a_humongous_codebase/_
